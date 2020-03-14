@@ -48,8 +48,8 @@ function processFirstItem(stringList, callback) {
  * [2] Invoking `processLength` passing `[]` and `(num) => "There are " + num`,
  * should return "There are 0".
 */
-function processLength(/* CODE HERE */) {
-  /* CODE HERE */
+function processLength(list, callback) {
+  return callback(list.length);
 }
 
 /**
@@ -66,8 +66,8 @@ function processLength(/* CODE HERE */) {
  * Invoking `processLastItem` passing `['foo', 'bar']` and `(str) => str + str`,
  * should return 'barbar'.
 */
-function processLastItem(/* CODE HERE */) {
-  /* CODE HERE */
+function processLastItem(stringList, callback) {
+  return callback(stringList[stringList.length-1]);
 }
 
 /**
@@ -82,15 +82,21 @@ function processLastItem(/* CODE HERE */) {
  * @returns the result of invoking `callback` passing the SUM of `num1` and `num2`.
  * 
  * Examples of usage of this higher-order function:
- * [1] Invoking `processSum` passing `10`, `30` and `(num) => num + " is a big number!"`,
+ * [1] Invoking `processSum` passing `10`, `30` and `function(num) { 
+ * num + " is a big number!"` 
+ * },
  * should return "40 is a big number!".
  * 
  * [2] Invoking `processSum` passing `-5`, '-1', and `(num) => num + 1000`,
  * should return 994.
 */
-function processSum(/* CODE HERE */) {
-  /* CODE HERE */
-}
+function processSum(num1, num2, callback) {
+   return callback(num1 + num2)
+  }
+ 
+
+
+
 
 /**
  * ### Challenge `processProduct`
@@ -110,8 +116,8 @@ function processSum(/* CODE HERE */) {
  * [2] Invoking `processProduct` passing 25 and 0 and `(num) => num + 1000`,
  * should return 1000.
 */
-function processProduct(/* CODE HERE */) {
-  /* CODE HERE */
+function processProduct(num1, num2, callback) {
+  return callback(num1 * num2);
 }
 
 /**
@@ -132,8 +138,9 @@ function processProduct(/* CODE HERE */) {
  * [2] Invoking `processDuplicateFree` passing `[1,1,2,2,3]` and `(arr) => arr.length`,
  * should return 3.
 */
-function processDuplicateFree(/* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */) {
-  /* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS */
+function processDuplicateFree(list, callback) {
+  list = list.filter((item, index) => list.indexOf(item) === index)
+  return callback(list);
 }
 
 /////////////// HIGHER-ORDER ARRAY METHODS ///////////////
@@ -155,8 +162,8 @@ function processDuplicateFree(/* CODE HERE ONLY AFTER COMPLETING ALL OTHER TASKS
  * 
  * [2] Invoking `lowerCaseStrings` with `['a', 'b', 'c' ]` will return `[ 'a', 'b', 'c' ]`.
 */
-function lowerCaseStrings(/* code here */) {
-  /* code here */
+function lowerCaseStrings(strings) {
+  return strings.map(str => str.toLowerCase());
 }
 
 /**
@@ -174,8 +181,8 @@ function lowerCaseStrings(/* code here */) {
  * 
  * [2] Invoking `isItAnApple` with `['a', 'b', 'c' ]` will return `[ false, false, false ]`.
 */
-function isItAnApple(/* code here */) {
-  /* code here */
+function isItAnApple(strings) {
+  return strings.map( str => str === 'apple');
 }
 
 /**
@@ -194,8 +201,8 @@ function isItAnApple(/* code here */) {
  * 
  * [2] Invoking `removeApple` with `['a', 'b', 'c' ]` will return `[ 'a', 'b', 'c' ]`.
 */
-function removeApple(/* code here */) {
-  /* code here */
+function removeApple(strings) {
+ return strings.filter(str => str !== 'apple')
 }
 
 /**
@@ -213,8 +220,9 @@ function removeApple(/* code here */) {
  * 
  * [2] Invoking `stringSmash` with `['a', 'b', 'c' ]` will return `abc`.
 */
-function stringSmash(/* code here */) {
-  /* code here */
+function stringSmash(strings) {
+  
+  return strings.reduce((strings, element) => strings.concat(element), '');
 }
 
 // A local community center is holding a fund raising 5k fun run and has invited
@@ -232,8 +240,14 @@ function stringSmash(/* code here */) {
  * @returns an array with all the runners' full names in the following format: "Smith, John".
  * The full names appear in the array in the same order the runners appear in the `runners` array.
 */
-function getFullNames(/* CODE HERE */) {
-  /* CODE HERE */
+function getFullNames(runners) {
+  runners = runners.map(runner => {
+    if(runner === runner.last_name || runner.first_name){
+      return `${runner.last_name}, ${runner.first_name}`; 
+    } 
+  }
+ );
+ return runners;
 }
 
 /**
@@ -248,8 +262,12 @@ function getFullNames(/* CODE HERE */) {
  * @returns an array with all the runners' first names in ALL CAPS.
  * The first names appear in the array in the same order the runners appear in the `runners` array.
 */
-function firstNamesAllCaps(/* CODE HERE */) {
-  /* CODE HERE */
+function firstNamesAllCaps(runners) {
+  runners = runners.map(runner => {
+    const runnerCaps = runner.first_name;
+    return runnerCaps.toUpperCase();
+    });
+  return runners;
 }
 
 /**
@@ -332,12 +350,7 @@ function counter2() {
  * counter() // should return 0
  * counter() // should return 1
  * counter() // should return 2
- * counter() // should return 3
- * counter() // should return 0
- * counter() // should return 1
- * counter() // should return 2
- * counter() // should return 3
- * counter() // should return 0
+ * counter() // should return console.log(firstNamesAllCaps())0
  * etc
 */
 function counterMakerWithLimit(/* CODE HERE */) {
