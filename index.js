@@ -303,7 +303,10 @@ function getRunnersByTShirtSize(runners, tShirtSize) {
  * @returns a number which is the sum of the donations by all runners.
 */
 function tallyUpDonations(runners) {
-  /* CODE HERE */
+  const donations = runners.reduce((total, element) => {
+    return total + element.donation;
+  }, 0);
+  return donations;
 }
 
 /////////////// CLOSURES ///////////////
@@ -317,9 +320,15 @@ function tallyUpDonations(runners) {
  * 
  * 1. What is the difference between counter1 and counter2?
  * 
+ * counter1 uses a closure and counter 2 does not. counter1 also doesnt return an actual value other than the function counter
+ * 
  * 2. Which of the two uses a closure? How can you tell?
  * 
+ * counter1 because it has a "function within a function"
+ * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ * 
+ * if you wanted to store the value of the count and go like 1,2,3,4 instead of 1,1,1,1
  *
 */
 
@@ -331,10 +340,11 @@ function counterMaker() {
   }
 }
 
+
 const counter1 = counterMaker();
 
 // counter2 code
-let count = 0;
+ let count = 0;
 
 function counter2() {
   return count++;
@@ -353,12 +363,18 @@ function counter2() {
  * counter() // should return 0
  * counter() // should return 1
  * counter() // should return 2
- * counter() // should return console.log(firstNamesAllCaps())0
+ * counter() // should return 0
  * etc
 */
-function counterMakerWithLimit(/* CODE HERE */) {
-  /* CODE HERE */
+function counterMakerWithLimit(maxValue) {
+    let counter = -1;
+    return () => {
+      maxValue === counter ? counter = 0 : counter++;
+      return counter;
+    }
 }
+
+console.log(counterMakerWithLimit(5));
 
 /////////////// END OF CHALLENGE ///////////////
 /////////////// END OF CHALLENGE ///////////////
